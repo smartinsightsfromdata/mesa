@@ -60,7 +60,7 @@ var draw_graph = function (){
     simulation
         .nodes(graph.nodes)
         .on("tick", ticked);
-
+    console.log(node)
     simulation.force("link")
         .links(graph.links);
 

@@ -40,28 +40,14 @@ class VirusModel(Model):
         G = nx.Graph()
 
         num_links = round(self.avg_node_degree * self.num_agents / 2)
-        G = nx.dense_gnm_random_graph(self.num_agents, num_links)
+        # G = nx.dense_gnm_random_graph(self.num_agents, num_links)
+        G = nx.erdos_renyi_graph(self.num_agents, num_links)
 
         # Assign agents to the nodes in the graph
         for i in G.nodes():
             G.node[i]['agent'] = VirusAgent(i).__dict__
 
             # self.schedule.add(agent)
-
-        # TODO: Rewrite node selection to do the following...
-        # "The network that is created is based on proximity
-        # (Euclidean distance) between nodes. A node is randomly chosen and
-        # connected to the nearest node that it is not already connected
-        # to. This process is repeated until the network has the correct
-        # number of links to give the specified average node degree."
-
-        # From:
-        # Stonedahl, F. and Wilensky, U. (2008). NetLogo Virus on a Network
-        # model.
-
-        # There maybe an easy way to do it using one of the graphs from
-        # this page:
-        # https://networkx.github.io/documentation/networkx-1.10/reference/generators.html
 
         return G
 
@@ -75,6 +61,7 @@ class VirusModel(Model):
 
             G.node[node]['agent']['infected'] = 1
             print(G.node[node])
+        print(G)
         return G
 
     def step(self):

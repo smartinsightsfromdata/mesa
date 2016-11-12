@@ -109,7 +109,7 @@ class VisualizationElement:
                 to the client.
 
     """
-
+    css_includes = []
     package_includes = []
     local_includes = []
     js_code = ''
@@ -143,6 +143,7 @@ class PageHandler(tornado.web.RequestHandler):
             element.index = i
         self.render("modular_template.html", port=self.application.port,
                     model_name=self.application.model_name,
+                    css_includes=self.application.css_includes,
                     package_includes=self.application.package_includes,
                     local_includes=self.application.local_includes,
                     scripts=self.application.js_code)
@@ -216,10 +217,13 @@ class ModularServer(tornado.web.Application):
         """ Create a new visualization server with the given elements. """
         # Prep visualization elements:
         self.visualization_elements = visualization_elements
+        self.css_includes = set()
         self.package_includes = set()
         self.local_includes = set()
         self.js_code = []
         for element in self.visualization_elements:
+            for include_file in element.css_includes:
+                self.css_includes.add(include_file)
             for include_file in element.package_includes:
                 self.package_includes.add(include_file)
             for include_file in element.local_includes:

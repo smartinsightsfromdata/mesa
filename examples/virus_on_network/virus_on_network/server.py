@@ -33,4 +33,3 @@ server = ModularServer(VirusModel, [network], "Network Example",
                        num_agents, width, height)
 
 server.max_steps = 0
-server.port = 8888
