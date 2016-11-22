@@ -55,13 +55,10 @@ class VirusModel(Model):
         """ Infect nodes according to the initial outbreak size. """
 
         G = self.graph
-        print(N)
         for i in range(N):
             node = choice(G.nodes())
 
             G.node[node]['agent']['infected'] = 1
-            print(G.node[node])
-        print(G)
         return G
 
     def step(self):
