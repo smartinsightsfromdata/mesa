@@ -15,11 +15,11 @@ class Network(VisualizationElement):
     package_includes = ["d3.v4.min.js", "networkdraw.js"]
     # TODO move this to the model
     css_includes = ["virus_on_network/virus_styles.css"]
-    portrayal_method = None
+    portrayal = None
 
     def __init__(self, portrayal, width=600, height=800):
 
-        self.portrayal = portrayal
+        self.portrayal_method = portrayal
         self.width = width
         self.height = height
 
@@ -34,5 +34,17 @@ class Network(VisualizationElement):
             This allows us to pass the graph as a Json.
         """
         data = json_graph.node_link_data(model.graph)
+
+        for node in data['nodes']:
+            # {'agent': {'unique_id': 0, 'infected': 0}, 'id': 0}
+            # TODO: abstract this
+
+            if node['agent']['infected']:
+                node['agent']['color'] = '#C70039'
+            else:
+                node['agent']['color'] = '#999999'
+
+
         json_data = json.dumps(data)
         return json_data
+

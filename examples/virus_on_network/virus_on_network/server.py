@@ -8,12 +8,12 @@ count = 0
 
 def portrayal(agent):
     """ This is how agents are displayed. """
-
+    print('protrayal method')
     if agent is None:
         return
 
     portrayal = {"fill": "grey"}
-    print(agent)
+
     if agent:
         portrayal["fill"] = "red"
     else:

@@ -7,6 +7,7 @@ from mesa import Agent, Model
 from mesa.time import RandomActivation
 from mesa.space import MesaNetwork
 
+
 class VirusAgent(Agent):
     """ A virus agent, which can be infected or not infected. """
 
@@ -30,7 +31,7 @@ class VirusModel(Model):
         self.initial_outbreak_size = initial_outbreak_size
 
         network = MesaNetwork(N, avg_node_degree=avg_node_degree)   # create G
-        network = MesaNetwork.add_agents(network, VirusAgent)   # add agent obj to nodes
+        network = MesaNetwork.add_agents(network, VirusAgent)  # add agent objs
         network = self._infect_nodes(network, initial_outbreak_size)  # infect
         self.graph = network
 
@@ -42,7 +43,6 @@ class VirusModel(Model):
         G = network
         for i in range(N):
             node = choice(G.nodes())
-
             G.node[node]['agent']['infected'] = 1
         return G
 

@@ -599,6 +599,7 @@ class ContinuousSpace:
         return (x < self.x_min or x > self.x_max or
                 y < self.y_min or y > self.y_max)
 
+
 class MesaNetwork(nx.Graph):
     """
         A network class
@@ -620,10 +621,10 @@ class MesaNetwork(nx.Graph):
         if not avg_node_degree or not total_links:
             warnings.warn('Network has no links.')
 
-        # G = nx.dense_gnm_random_graph(self.num_agents, num_links)
-
         # probability of edge being created, based off of avg_node_degree
         p = round(avg_node_degree) / N
+
+        # TODO -- Add different graph types
         G = nx.erdos_renyi_graph(N, p)
 
         self.graph = G

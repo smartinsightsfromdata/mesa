@@ -8,9 +8,7 @@ var nw_tag = "<svg id='network' width='" + width + "' height='" + height + "' ><
 // var nw_tag = "<svg></svg>";
 
 // Append it to body:
-console.log(nw_tag)
 var network = $(nw_tag)[0];
-console.log(network)
 
 $("body").append(network);
 
@@ -45,8 +43,7 @@ var draw_graph = function (){
     .enter().append("circle")
     .attr("r", 5)
     .attr("fill", function(d) {
-        console.log(d.agent)
-        return color(d.agent.infected);
+        return d.agent.color;
       })
     // This allows for selecting and deselecting f nodes.
     // It was causing some initial issues, so it is deactivated for now.
@@ -61,7 +58,6 @@ var draw_graph = function (){
     simulation
         .nodes(graph.nodes)
         .on("tick", ticked);
-    console.log(node)
     simulation.force("link")
         .links(graph.links);
 
@@ -103,7 +99,6 @@ this.render = function(data) {
 this.reset = function() {
   // Destroy network and recreate
   // svg.selectAll("*").remove();
-  console.log("here");
   // svg.selectAll("g").selectAll(".nodes").remove();
   svg.selectAll("g").remove();
 
