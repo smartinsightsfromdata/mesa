@@ -17,6 +17,10 @@ MultiGrid: extension to Grid where each cell is a set of objects.
 import itertools
 import random
 import math
+import warnings
+
+import networkx as nx
+
 
 # TODO: fix the global variables, they shouldn't be needed.
 RANDOM = -1
@@ -594,3 +598,44 @@ class ContinuousSpace:
         x, y = pos
         return (x < self.x_min or x > self.x_max or
                 y < self.y_min or y > self.y_max)
+
+class MesaNetwork(nx.Graph):
+    """
+        A network class
+
+    """
+    # TODO: Start here!
+    '''
+    Create a network class, then the network is on the model.
+    Then the network as protrayal.
+    '''
+    def __init__(self, N, avg_node_degree=0, total_links=0):
+        """ Create a new network
+
+        Args:
+            width, height: The width and height of the grid
+            torus: Boolean whether the grid wraps or not.
+
+        """
+        if not avg_node_degree or not total_links:
+            warnings.warn('Network has no links.')
+
+        # G = nx.dense_gnm_random_graph(self.num_agents, num_links)
+
+        # probability of edge being created, based off of avg_node_degree
+        p = round(avg_node_degree) / N
+        G = nx.erdos_renyi_graph(N, p)
+
+        self.graph = G
+
+    def add_agents(self, agent):
+        """
+        Assign agents to the nodes in the graph
+        """
+
+        G = self.graph
+        for i in G.nodes():
+            G.node[i]['agent'] = agent(i).__dict__
+
+        self.graph = G
+        return G

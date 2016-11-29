@@ -5,7 +5,7 @@ from random import choice
 
 from mesa import Agent, Model
 from mesa.time import RandomActivation
-
+from mesa.space import MesaNetwork
 
 class VirusAgent(Agent):
     """ A virus agent, which can be infected or not infected. """
@@ -22,39 +22,24 @@ class VirusModel(Model):
     """A virus model with some number of agents"""
 
     def __init__(self, N=150, width=500, height=500, avg_node_degree=3,
-                 initial_outbreak_size=10,):
+                 initial_outbreak_size=10):
 
-        self.num_agents = N
+        self.N = N
         self.avg_node_degree = Decimal(avg_node_degree)
         self.schedule = RandomActivation(self)
-        self.graph = self._create_graph()
-
         self.initial_outbreak_size = initial_outbreak_size
-        self.graph = self._infect_nodes(self.initial_outbreak_size)
+
+        network = MesaNetwork(N, avg_node_degree=avg_node_degree)   # create G
+        network = MesaNetwork.add_agents(network, VirusAgent)   # add agent obj to nodes
+        network = self._infect_nodes(network, initial_outbreak_size)  # infect
+        self.graph = network
 
         self.running = True
 
-    def _create_graph(self):
-        """ Initialize graph suring the setup process. """
-
-        G = nx.Graph()
-
-        num_links = round(self.avg_node_degree * self.num_agents / 2)
-        # G = nx.dense_gnm_random_graph(self.num_agents, num_links)
-        G = nx.erdos_renyi_graph(self.num_agents, num_links)
-
-        # Assign agents to the nodes in the graph
-        for i in G.nodes():
-            G.node[i]['agent'] = VirusAgent(i).__dict__
-
-            # self.schedule.add(agent)
-
-        return G
-
-    def _infect_nodes(self, N):
+    def _infect_nodes(self, network, N):
         """ Infect nodes according to the initial outbreak size. """
 
-        G = self.graph
+        G = network
         for i in range(N):
             node = choice(G.nodes())
 

@@ -45,6 +45,7 @@ var draw_graph = function (){
     .enter().append("circle")
     .attr("r", 5)
     .attr("fill", function(d) {
+        console.log(d.agent)
         return color(d.agent.infected);
       })
     // This allows for selecting and deselecting f nodes.

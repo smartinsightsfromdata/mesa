@@ -33,7 +33,6 @@ class Network(VisualizationElement):
             Networkx's json_graph turns graph into dictionary.
             This allows us to pass the graph as a Json.
         """
-
         data = json_graph.node_link_data(model.graph)
         json_data = json.dumps(data)
         return json_data

@@ -8,18 +8,16 @@ count = 0
 
 def portrayal(agent):
     """ This is how agents are displayed. """
-    print('here')
 
     if agent is None:
         return
 
-    portrayal = {"Shape": "circle",
-                 "Filled": "true"}
-
+    portrayal = {"fill": "grey"}
+    print(agent)
     if agent:
-        portrayal["Color"] = "red"
+        portrayal["fill"] = "red"
     else:
-        portrayal["Color"] = "grey"
+        portrayal["fill"] = "grey"
 
     return portrayal
 
@@ -27,9 +25,13 @@ def portrayal(agent):
 width = 900
 height = 700
 num_agents = 100
+avg_node_degree = 4
+initial_outbreak_size = 10
 
 network = Network(portrayal, width, height)
+
 server = ModularServer(VirusModel, [network], "Network Example",
-                       num_agents, width, height)
+                       num_agents, width, height,
+                       avg_node_degree, initial_outbreak_size)
 
 server.max_steps = 0
