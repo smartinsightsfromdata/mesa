@@ -8,16 +8,13 @@ count = 0
 
 def portrayal(agent):
     """ This is how agents are displayed. """
-    print('protrayal method')
+
     if agent is None:
         return
 
-    portrayal = {"fill": "grey"}
-
-    if agent:
-        portrayal["fill"] = "red"
-    else:
-        portrayal["fill"] = "grey"
+    portrayal = {"color": "#999999"}
+    if agent['infected']:
+        portrayal["color"] = "#C70039"
 
     return portrayal
 

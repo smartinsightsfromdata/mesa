@@ -37,13 +37,9 @@ class Network(VisualizationElement):
 
         for node in data['nodes']:
             # {'agent': {'unique_id': 0, 'infected': 0}, 'id': 0}
-            # TODO: abstract this
 
-            if node['agent']['infected']:
-                node['agent']['color'] = '#C70039'
-            else:
-                node['agent']['color'] = '#999999'
-
+            protrayal = self.portrayal_method(node['agent'])
+            node['agent']['color'] = protrayal['color']
 
         json_data = json.dumps(data)
         return json_data
