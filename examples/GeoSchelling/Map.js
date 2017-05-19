@@ -29,6 +29,12 @@ var MapModule = function(view, zoom, map_width, map_height) {
       layer.bindPopup(popupContent)
     }
 
+    PatchLayer.remove()
+    PatchLayer = L.geoJSON(data[1], {
+      onEachFeature: onEachFeature,
+      style: {color: "grey", opacity:0.65, weight: 3}
+    }).addTo(mymap)
+
     AgentLayer.remove()
     AgentLayer = L.geoJSON(data[0], {
       onEachFeature: onEachFeature,
@@ -40,10 +46,7 @@ var MapModule = function(view, zoom, map_width, map_height) {
       }
     }).addTo(mymap);
 
-    PatchLayer.remove()
-    PatchLayer = L.geoJSON(data[1], {
-      style: {color: "grey", opacity:0.65, weight: 3}
-    }).addTo(mymap)
+
   }
 
   this.reset = function() {

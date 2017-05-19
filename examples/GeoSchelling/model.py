@@ -74,8 +74,6 @@ class SchellingModel(Model):
         # Set up the grid with patches for every NUTS region
         regions = geojson.load(open('nuts_rg_60M_2013_lvl_2.geojson'))
         self.grid.create_patches(regions)
-        # for feature in regions['features']:
-        #    self.grid.crea(feature)
         for patch in self.grid.patches:
             (x, y) = patch.shape.representative_point().coords.xy
             patch.pos = [x[0], y[0]]

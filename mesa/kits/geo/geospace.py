@@ -118,8 +118,8 @@ class GeoSpace:
     def patches_at(self, pos):
         """ Return a list of patches at given pos """
         patches = []
+        p = Point(pos)
         for patch in self.patches:
-            p = Point(pos)
             if p.within(patch.shape):
                 patches.append(patch)
         return patches
